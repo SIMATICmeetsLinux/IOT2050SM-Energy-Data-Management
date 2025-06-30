@@ -1,7 +1,7 @@
 # **IOT2050SM-Energy-Data-Management**
 
 - [**IOT2050SM-Energy-Data-Management**](#iot2050sm-energy-data-management)
-  - [**Warning! Hazardous voltage - Will cause death or serious injury!**](#warning-hazardous-voltage---will-cause-death-or-serious-injury)
+  - [**Warning - Hazardous voltage**](#warning---hazardous-voltage)
   - [**Overview**](#overview)
     - [**Used Components**](#used-components)
     - [**Goal**](#goal)
@@ -9,9 +9,9 @@
   - [Contribution and Contribution License Agreement](#contribution-and-contribution-license-agreement)
   - [**Licence and Legal Information**](#licence-and-legal-information)
 
-## **Warning! Hazardous voltage - Will cause death or serious injury!**
+## **Warning - Hazardous voltage**
 
-This application example requires working with 230V and may only be carried out by qualified personnel.
+Will cause death or serious injury! This application example requires working with 230V and may only be carried out by qualified personnel.
 
 ![warning](docs/graphics/0-voltage-warning.png)
 
