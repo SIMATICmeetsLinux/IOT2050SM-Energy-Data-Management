@@ -1,0 +1,95 @@
+# **IOT2050 Setup & Connecting Energy Meter 1238**
+
+- [**IOT2050 Setup \& Connecting Energy Meter 1238**](#iot2050-setup--connecting-energy-meter-1238)
+  - [**Prepare the IOT2050**](#prepare-the-iot2050)
+  - [Setup a NTP server conncetion](#setup-a-ntp-server-conncetion)
+  - [**Hardware Setup IOT2050SM - Energy Meter 1238**](#hardware-setup-iot2050sm---energy-meter-1238)
+    - [**Hardware connection between IOT2050SM and Energy Meter**](#hardware-connection-between-iot2050sm-and-energy-meter)
+    - [**Hardware structure of the Distribution Box**](#hardware-structure-of-the-distribution-box)
+      - [**Structure**](#structure)
+      - [**Safety-Relevant Details**](#safety-relevant-details)
+  - [**EIO Config via IOT2050SM WebUI**](#eio-config-via-iot2050sm-webui)
+  - [**Node-Red Configuration**](#node-red-configuration)
+
+## **Prepare the IOT2050**
+
+Follow [SIMATIC_IOT2050_Setting_up.md](https://github.com/SIMATICmeetsLinux/IOT2050-SmartFarming-Application/blob/main/docs/SIMATIC_IOT2050_setting_up.md) for the following steps:
+
+- Installing the SD-Card Example Image (minimum Example Image V1.4 is required!) -> in this example V01.04.04 is used
+- First commissioning of the SIMATIC IOT2050: Remote access with Putty SSH Connection
+
+## Setup a NTP server conncetion
+
+## **Hardware Setup IOT2050SM - Energy Meter 1238**
+
+### **Hardware connection between IOT2050SM and Energy Meter**
+
+The IOT2050SM needs to be connected to the SM 1238 Energy Meter using the connection cable.
+
+![distribution box](graphics\2-1-connected-IOT2050SM.png)
+
+### **Hardware structure of the Distribution Box**
+
+![!!DANGER! Hazardous voltage. Will cause death or serious injury!! Turn off and lock out all power supplying this device before working on this device. Installation and maintenance work on this device may only be carried out by an authorized electrician. The exemplary structure is only for inspiration and may not be copied 1:1 without expert assessment.](graphics\0-0-voltage-warning.png)
+
+![distribution box](graphics\2-1-distributionbox.png)
+
+Please read the following points attentive:
+
+#### **Structure**
+
+- **Incoming Power**: Only one phase (230V AC) and neutral enter the distribution box.
+- **Main Switch**: A 2-pole main switch disconnects both the phase and neutral for safety.
+- **Energy Meter**: Measures energy performance data consumption for the electricity consumer.
+- **Distribution**: The single phase is internally split and labeled as L1, L2, and L3, each with its own outlet and neutral connection.
+- **Current Transformers**: Each "L" line (L1, L2, L3) can be monitored separately, mainly for load measurement, not for phase difference.
+- **Outlets**: All outlets (L1, L2, L3) provide the same 230V AC relative to neutral, as they all originate from the same phase.
+
+#### **Safety-Relevant Details**
+
+- **No Phase Shift**: Since all outputs are from the same phase, there is no 120° phase shift as in a real three-phase system. Connecting equipment that expects true three-phase power could lead to malfunction or damage.
+- **Overload Protection**: Each "L" line can be monitored for current, allowing overload detection and protection for each outlet.
+- **Clear Labeling**: Even though labeled L1, L2, L3, all are from the same phase. This must be clearly indicated to prevent confusion and unsafe connections, especially for users expecting three-phase power.
+- **Isolation**: The 2-pole main switch ensures safe disconnection of both phase and neutral during maintenance.
+- **Neutral Bonding**: Proper connection and grounding of the neutral conductor are essential for safety, as all outlets share the same neutral.
+
+## **EIO Config via IOT2050SM WebUI**
+
+On the Example Image V1.4 (used in this manual) an EIO-configuration-interface is already preinstalled and autostart is enabled. To access it, open a browser on your PC connected to the IOT2050 and open the URL `http://<IP of the IOT2050>:2050/`.
+
+![Flow overview: Building Structure in OPC UA](graphics\2-2-access-eio-webui.png)
+
+Configure the flow according to your needs. You can also use the example configuration of this application example: [config.yaml](../src/config.yaml) -> Click "Import Configuration" and select the example configuration.
+
+![module configuration](graphics\2-module-configuration.png)
+![module configuration](graphics\2-module-configuration-2.png)
+
+**Note:** The selcted *current transformer primary current* depends on the used curent transfomer. Int his case 3x ELEQ TQ30 60/1A current transformer.
+
+The selected process data variant *EE@Industry measured data profile e3 (W# 16# E3)* provides the following performance data:
+
+![EE@Industry measured data profile e3 (W# 16# E3)](graphics\2-4-measurement-data-profile.png)
+
+The following allocations are relevant for this example:
+
+- total active energy L1L2L3 inflow [*x1Wh*]: energy consumption counter for L1, L2 and L3.
+- voltage UL1-N [*x1V*]: As L1, L2 and L3 are split from only one phase in this example this parameter is representive for volatge UL2-N and UL3-N too.
+- current L1-L2 [*x1A*]: current / electric flow of the different lines.
+
+For more detailed information have a look into the SM 1238 Energy Meter 480VAC Manual.
+
+If all settings have been made correctly, click on **Deploy** to apply the configuration to the IOT2050SM.
+
+![Deploy Configuration to IOT2050SM](graphics\2-5-deploy-config.png)
+
+The performance energy data will then be stored in *value_raw* in the directory */eiofs/controller/slot1/*.
+
+![value-raw](graphics\2-value-raw.png)
+
+## **Node-Red Configuration**
+
+On the Example Image V1.4 (used in this manual) Node-Red is already preinstalled and autostart is enabled. To access it, open a browser on your PC connected to the IOT2050 and open the URL `http://<IP of the IOT2050>:1880/`.
+
+The following illustrations show the complete Node-RED flow needed to ...
+
+![overview-flow](graphics\2-overview-flow.png)

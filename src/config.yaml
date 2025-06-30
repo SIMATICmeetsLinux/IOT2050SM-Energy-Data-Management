@@ -1,0 +1,76 @@
+slot1:
+  description: SM1238 Energy Meter 480VAC
+  mlfb: 6ES7238-5XA32-0XB0
+  module_version: 112
+  con_type: 15
+  range: 10
+  line_freq: 2
+  period_meters: 0
+  meter_gate: false
+  min_max_cal: false
+  line_vol_tol: 10
+  diag_line_vol: false
+  data_variant: 227
+  ch0:
+    diag_over_cur: false
+    diag_over_cal: false
+    diag_ll_vol: false
+    diag_under_vol: false
+    diag_over_vol: false
+    over_cur_tol_val: 100
+    over_cur_tol_time: 40000
+    ct_primary_cur: 60
+    en_gate_cir_hour_meter: false
+    ct_second_cur: 0
+    act_hour_meter: false
+    re_cur_dir: false
+    ll_cur_measure: 2
+    vt_second_vol: 230
+    vt_prim_vol: 230
+  ch1:
+    diag_over_cur: false
+    diag_over_cal: false
+    diag_ll_vol: false
+    diag_under_vol: false
+    diag_over_vol: false
+    over_cur_tol_val: 100
+    over_cur_tol_time: 40000
+    ct_primary_cur: 60
+    en_gate_cir_hour_meter: false
+    ct_second_cur: 0
+    act_hour_meter: false
+    re_cur_dir: false
+    ll_cur_measure: 2
+    vt_second_vol: 230
+    vt_prim_vol: 230
+  ch2:
+    diag_over_cur: false
+    diag_over_cal: false
+    diag_ll_vol: false
+    diag_under_vol: false
+    diag_over_vol: false
+    over_cur_tol_val: 100
+    over_cur_tol_time: 40000
+    ct_primary_cur: 60
+    en_gate_cir_hour_meter: false
+    ct_second_cur: 0
+    act_hour_meter: false
+    re_cur_dir: false
+    ll_cur_measure: 2
+    vt_second_vol: 230
+    vt_prim_vol: 230
+slot2:
+  description: No module for this slot
+  mlfb: NA
+slot3:
+  description: No module for this slot
+  mlfb: NA
+slot4:
+  description: No module for this slot
+  mlfb: NA
+slot5:
+  description: No module for this slot
+  mlfb: NA
+slot6:
+  description: No module for this slot
+  mlfb: NA
