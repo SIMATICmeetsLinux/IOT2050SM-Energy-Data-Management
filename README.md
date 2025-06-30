@@ -1,6 +1,7 @@
 # **IOT2050SM-Energy-Data-Management**
 
 - [**IOT2050SM-Energy-Data-Management**](#iot2050sm-energy-data-management)
+  - [**Warning! Hazardous voltage - Will cause death or serious injury!**](#warning-hazardous-voltage---will-cause-death-or-serious-injury)
   - [**Overview**](#overview)
     - [**Used Components**](#used-components)
     - [**Goal**](#goal)
@@ -8,11 +9,13 @@
   - [Contribution and Contribution License Agreement](#contribution-and-contribution-license-agreement)
   - [**Licence and Legal Information**](#licence-and-legal-information)
 
+## **Warning! Hazardous voltage - Will cause death or serious injury!**
+
+This application example requires working with 230V and may only be carried out by qualified personnel.
+
+![warning](docs\graphics\0-voltage-warning.png)
+
 ## **Overview**
-
-**Warning** Hazardous voltage. Will cause death or serious injury!! This application example requires working with 230V and may only be carried out by qualified personnel.
-
-![!!DANGER! Hazardous voltage. Will cause death or serious injury!! Turn off and lock out all power supplying this device before working on this device. Installation and maintenance work on this device may only be carried out by an authorized electrician. The exemplary structure is only for inspiration and may not be copied 1:1 without expert assessment.](docs\graphics\0-0-voltage-warning.png)
 
 This application describes how collect and manage energy data on an IOT2050SM using a compatible Energy Meter 1238. The performance data will be collected, pre-processed and forwarded to a SCADA system using MQTT.
 
