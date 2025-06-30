@@ -13,7 +13,7 @@
 
 This application example requires working with 230V and may only be carried out by qualified personnel.
 
-![warning](docs\graphics\0-voltage-warning.png)
+![warning](docs/graphics/0-voltage-warning.png)
 
 ## **Overview**
 
