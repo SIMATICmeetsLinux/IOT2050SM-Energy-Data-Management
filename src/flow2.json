@@ -1,0 +1,704 @@
+[
+    {
+        "id": "b4da80e01aea00f9",
+        "type": "inject",
+        "z": "5b855d571e5a6a3d",
+        "name": "50ms cycle",
+        "props": [],
+        "repeat": "0.05",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 200,
+        "wires": [
+            [
+                "94b6c8c24149f912"
+            ]
+        ]
+    },
+    {
+        "id": "94b6c8c24149f912",
+        "type": "file in",
+        "z": "5b855d571e5a6a3d",
+        "name": "",
+        "filename": "/eiofs/controller/slot1/value_raw",
+        "filenameType": "str",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 250,
+        "y": 280,
+        "wires": [
+            [
+                "da9f3d33dfcee49c",
+                "b3726a9a9f8b24fb",
+                "a091b717a64c1bfe",
+                "b4472a5b40557acc",
+                "1a142a9cbf093372"
+            ]
+        ]
+    },
+    {
+        "id": "4e02ad590e0d9b70",
+        "type": "function",
+        "z": "5b855d571e5a6a3d",
+        "name": "buffer (max/min/avg/count) & trigger",
+        "func": "// Get current buffer\nlet buffer = context.get('buffer') || [];\n\n// Check if new content or trigger\nif (typeof msg.payload === \"number\" && msg.topic !== \"trigger\") {\n    buffer.push(msg.payload);\n    context.set('buffer', buffer);\n    return null; // Noch nichts ausgeben\n}\n\n// Check after trigger\nif (msg.topic === \"trigger\" && buffer.length > 0) {\n    let min = Math.min(...buffer);\n    let max = Math.max(...buffer);\n    let avg = buffer.reduce((a, b) => a + b, 0) / buffer.length;\n    // Reset Buffer\n    context.set('buffer', []);\n    // Forward data\n    msg.payload = {\n        min: min,\n        max: max,\n        avg: avg,\n        count: buffer.length\n    };\n    return msg;\n}\n\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 360,
+        "wires": [
+            [
+                "ae499f20f3d19a59"
+            ]
+        ]
+    },
+    {
+        "id": "be8356f0fc024840",
+        "type": "change",
+        "z": "5b855d571e5a6a3d",
+        "name": "topic == trigger",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "trigger",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 420,
+        "y": 120,
+        "wires": [
+            [
+                "4e02ad590e0d9b70",
+                "6f665cc1e554e427",
+                "702d3c130810b6a7",
+                "fc0c298447e96c9b",
+                "ce50925b2b600565"
+            ]
+        ]
+    },
+    {
+        "id": "92934a4d586a3c6b",
+        "type": "debug",
+        "z": "5b855d571e5a6a3d",
+        "name": "status",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 1170,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "da9f3d33dfcee49c",
+        "type": "function",
+        "z": "5b855d571e5a6a3d",
+        "name": "voltage UL1-N",
+        "func": "// msg.payload = [Byte0, Byte1, Byte2, Byte3]\nlet bytes = [msg.payload[58], msg.payload[59], msg.payload[60], msg.payload[61]];\n\n// Falls die Reihenfolge nicht stimmt, ggf. anpassen:\n// bytes = [bytes[3], bytes[2], bytes[1], bytes[0]]; // für Little Endian\n\nlet buf = Buffer.from(bytes);\nlet value = buf.readFloatBE(0); // für Big Endian\n// Alternativ: buf.readFloatLE(0) für Little Endian\n\nmsg.payload = value;\nmsg.topic = \"volUL1-N\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 360,
+        "wires": [
+            [
+                "4e02ad590e0d9b70",
+                "bf2f1cfd59af6b2a",
+                "750550a1522a2162"
+            ]
+        ]
+    },
+    {
+        "id": "b3726a9a9f8b24fb",
+        "type": "function",
+        "z": "5b855d571e5a6a3d",
+        "name": "current L1",
+        "func": "// msg.payload = [Byte0, Byte1, Byte2, Byte3]\nlet bytes = [msg.payload[82], msg.payload[83], msg.payload[84], msg.payload[85]];\n\n// Falls die Reihenfolge nicht stimmt, ggf. anpassen:\n// bytes = [bytes[3], bytes[2], bytes[1], bytes[0]]; // für Little Endian\n\nlet buf = Buffer.from(bytes);\nlet value = buf.readFloatBE(0); // für Big Endian\n// Alternativ: buf.readFloatLE(0) für Little Endian\n\nmsg.payload = value;\nmsg.topic = \"curL1\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 440,
+        "wires": [
+            [
+                "6f665cc1e554e427"
+            ]
+        ]
+    },
+    {
+        "id": "a091b717a64c1bfe",
+        "type": "function",
+        "z": "5b855d571e5a6a3d",
+        "name": "current L2",
+        "func": "// msg.payload = [Byte0, Byte1, Byte2, Byte3]\nlet bytes = [msg.payload[86], msg.payload[87], msg.payload[88], msg.payload[89]];\n\n// Falls die Reihenfolge nicht stimmt, ggf. anpassen:\n// bytes = [bytes[3], bytes[2], bytes[1], bytes[0]]; // für Little Endian\n\nlet buf = Buffer.from(bytes);\nlet value = buf.readFloatBE(0); // für Big Endian\n// Alternativ: buf.readFloatLE(0) für Little Endian\n\nmsg.payload = value;\nmsg.topic = \"curL2\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 520,
+        "wires": [
+            [
+                "702d3c130810b6a7"
+            ]
+        ]
+    },
+    {
+        "id": "b4472a5b40557acc",
+        "type": "function",
+        "z": "5b855d571e5a6a3d",
+        "name": "current L3",
+        "func": "let bytes = [msg.payload[90], msg.payload[91], msg.payload[92], msg.payload[93]];\n\nlet buf = Buffer.from(bytes);\nlet value = buf.readFloatBE(0); // für Big Endian\n// Alternativ: buf.readFloatLE(0) für Little Endian\n\nmsg.payload = value;\nmsg.topic = \"curL3\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 600,
+        "wires": [
+            [
+                "fc0c298447e96c9b"
+            ]
+        ]
+    },
+    {
+        "id": "6f665cc1e554e427",
+        "type": "function",
+        "z": "5b855d571e5a6a3d",
+        "name": "buffer (max/min/avg/count) & trigger",
+        "func": "// Werte aus dem Kontext holen\nlet buffer = context.get('buffer') || [];\n\n// Prüfen, ob es ein neuer Messwert ist\nif (typeof msg.payload === \"number\" && msg.topic !== \"trigger\") {\n    buffer.push(msg.payload);\n    context.set('buffer', buffer);\n    return null; // Noch nichts ausgeben\n}\n\n// Prüfen, ob der Trigger zur Auswertung kommt\nif (msg.topic === \"trigger\" && buffer.length > 0) {\n    let min = Math.min(...buffer);\n    let max = Math.max(...buffer);\n    let avg = buffer.reduce((a, b) => a + b, 0) / buffer.length;\n    // Buffer zurücksetzen\n    context.set('buffer', []);\n    // Ergebnis ausgeben\n    msg.payload = {\n        min: min,\n        max: max,\n        avg: avg,\n        count: buffer.length\n    };\n    return msg;\n}\n\n// Standardfall: nichts tun\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 440,
+        "wires": [
+            [
+                "3f7c43bd7b768ca2"
+            ]
+        ]
+    },
+    {
+        "id": "702d3c130810b6a7",
+        "type": "function",
+        "z": "5b855d571e5a6a3d",
+        "name": "buffer (max/min/avg/count) & trigger",
+        "func": "// Werte aus dem Kontext holen\nlet buffer = context.get('buffer') || [];\n\n// Prüfen, ob es ein neuer Messwert ist\nif (typeof msg.payload === \"number\" && msg.topic !== \"trigger\") {\n    buffer.push(msg.payload);\n    context.set('buffer', buffer);\n    return null; // Noch nichts ausgeben\n}\n\n// Prüfen, ob der Trigger zur Auswertung kommt\nif (msg.topic === \"trigger\" && buffer.length > 0) {\n    let min = Math.min(...buffer);\n    let max = Math.max(...buffer);\n    let avg = buffer.reduce((a, b) => a + b, 0) / buffer.length;\n    // Buffer zurücksetzen\n    context.set('buffer', []);\n    // Ergebnis ausgeben\n    msg.payload = {\n        min: min,\n        max: max,\n        avg: avg,\n        count: buffer.length\n    };\n    return msg;\n}\n\n// Standardfall: nichts tun\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 520,
+        "wires": [
+            [
+                "1044ea1f0dc18708"
+            ]
+        ]
+    },
+    {
+        "id": "fc0c298447e96c9b",
+        "type": "function",
+        "z": "5b855d571e5a6a3d",
+        "name": "buffer (max/min/avg/count) & trigger",
+        "func": "// Werte aus dem Kontext holen\nlet buffer = context.get('buffer') || [];\n\n// Prüfen, ob es ein neuer Messwert ist\nif (typeof msg.payload === \"number\" && msg.topic !== \"trigger\") {\n    buffer.push(msg.payload);\n    context.set('buffer', buffer);\n    return null; // Noch nichts ausgeben\n}\n\n// Prüfen, ob der Trigger zur Auswertung kommt\nif (msg.topic === \"trigger\" && buffer.length > 0) {\n    let min = Math.min(...buffer);\n    let max = Math.max(...buffer);\n    let avg = buffer.reduce((a, b) => a + b, 0) / buffer.length;\n    // Buffer zurücksetzen\n    context.set('buffer', []);\n    // Ergebnis ausgeben\n    msg.payload = {\n        min: min,\n        max: max,\n        avg: avg,\n        count: buffer.length\n    };\n    return msg;\n}\n\n// Standardfall: nichts tun\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 600,
+        "wires": [
+            [
+                "122c72536fdd669e"
+            ]
+        ]
+    },
+    {
+        "id": "66808ee4e35cbd05",
+        "type": "debug",
+        "z": "5b855d571e5a6a3d",
+        "name": "status",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 1170,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "584a1d077b67a004",
+        "type": "debug",
+        "z": "5b855d571e5a6a3d",
+        "name": "status",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 1170,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "2bb66443b4f251fb",
+        "type": "debug",
+        "z": "5b855d571e5a6a3d",
+        "name": "status",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 1170,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "ae499f20f3d19a59",
+        "type": "change",
+        "z": "5b855d571e5a6a3d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "IOT2050/em1/voltage/data",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 980,
+        "y": 360,
+        "wires": [
+            [
+                "92934a4d586a3c6b",
+                "459c81a66b3b97d5"
+            ]
+        ]
+    },
+    {
+        "id": "3f7c43bd7b768ca2",
+        "type": "change",
+        "z": "5b855d571e5a6a3d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "IOT2050/em1/current/L1/data",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 980,
+        "y": 440,
+        "wires": [
+            [
+                "66808ee4e35cbd05",
+                "459c81a66b3b97d5"
+            ]
+        ]
+    },
+    {
+        "id": "1044ea1f0dc18708",
+        "type": "change",
+        "z": "5b855d571e5a6a3d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "IOT2050/em1/current/L2/data",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 980,
+        "y": 520,
+        "wires": [
+            [
+                "584a1d077b67a004",
+                "459c81a66b3b97d5"
+            ]
+        ]
+    },
+    {
+        "id": "122c72536fdd669e",
+        "type": "change",
+        "z": "5b855d571e5a6a3d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "IOT2050/em1/current/L3/data",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 980,
+        "y": 600,
+        "wires": [
+            [
+                "2bb66443b4f251fb",
+                "459c81a66b3b97d5"
+            ]
+        ]
+    },
+    {
+        "id": "1a142a9cbf093372",
+        "type": "function",
+        "z": "5b855d571e5a6a3d",
+        "name": "total active energy L1L2L3 inflow",
+        "func": "// msg.payload = [Byte0, Byte1, Byte2, Byte3]\nlet bytes = [msg.payload[26], msg.payload[27], msg.payload[28], msg.payload[29], msg.payload[30], msg.payload[31], msg.payload[32], msg.payload[33]];\n\nlet buf = Buffer.from(bytes);\nlet value = buf.readDoubleBE(0); // Für Big Endian --> ReadDouble für LREAL\n// Alternativ: buf.readDoubleLE(0) für Little Endian\n\nmsg.payload = value;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 680,
+        "wires": [
+            [
+                "ce50925b2b600565"
+            ]
+        ]
+    },
+    {
+        "id": "ce50925b2b600565",
+        "type": "function",
+        "z": "5b855d571e5a6a3d",
+        "name": "energy consumption difference",
+        "func": "// Werte aus dem Kontext holen\nlet buffer = context.get('buffer') || [];\n\n// Prüfen, ob es ein neuer Messwert ist\nif (typeof msg.payload === \"number\" && msg.topic !== \"trigger\") {\n    buffer.push(msg.payload);\n    context.set('buffer', buffer);\n    return null; // Noch nichts ausgeben\n}\n\n// Prüfen, ob der Trigger zur Auswertung kommt\nif (msg.topic === \"trigger\" && buffer.length > 0) {\n    // Berechnung der Differenz\n    const start = buffer[0];\n    const end = buffer[buffer.length - 1];\n    const difference = end - start;\n\n    // Ergebnis ausgeben\n    msg.payload = {\n        difference: difference,\n        start_timestamp: start,   // Optional: Namen anpassen\n        end_timestamp: end,       // je nach Kontext\n        samples: buffer.length\n    };\n\n    // Buffer zurücksetzen\n    context.set('buffer', []);\n    return msg;\n}\n\n// Standardfall: nichts tun\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 680,
+        "wires": [
+            [
+                "f79b0c5151ef8ead"
+            ]
+        ]
+    },
+    {
+        "id": "c1f6888b8b32825f",
+        "type": "debug",
+        "z": "5b855d571e5a6a3d",
+        "name": "status",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 1170,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "f79b0c5151ef8ead",
+        "type": "change",
+        "z": "5b855d571e5a6a3d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "IOT2050/em1/consumption/data",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 980,
+        "y": 680,
+        "wires": [
+            [
+                "c1f6888b8b32825f",
+                "459c81a66b3b97d5"
+            ]
+        ]
+    },
+    {
+        "id": "bf2f1cfd59af6b2a",
+        "type": "function",
+        "z": "5b855d571e5a6a3d",
+        "name": "voltage alarm",
+        "func": "// limits\nlet min = 229.5;\nlet max = 234.5;\n\n// get current alarm-status from the context\nlet alarmState = flow.get('alarmState') || \"normal\";\nlet newState = alarmState;\nlet alarmMsg = null;\n\nif (msg.payload < min) {\n    if (alarmState !== \"low\") {\n        // send alarm for lower limit exceeded\n        alarmMsg = { payload: \"lower limit exceeded\", value: msg.payload };\n        newState = \"low\";\n    }\n} else if (msg.payload > max) {\n    if (alarmState !== \"high\") {\n        // send alarm for upper limit exceeded\n        alarmMsg = { payload: \"upper limit exceeded\", value: msg.payload };\n        newState = \"high\";\n    }\n} else {\n    if (alarmState !== \"normal\") {\n        // send alarm for normal voltage\n        alarmMsg = { payload: \"voltage reached healthy state\", value: msg.payload };\n        newState = \"normal\";\n    }\n}\n\n// Neuen Status speichern\nflow.set('alarmState', newState);\n\n// Nur eine Nachricht ausgeben, wenn ein Zustandswechsel stattfand\nreturn alarmMsg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 280,
+        "wires": [
+            [
+                "3265b0f4a64d557a",
+                "0f8d6960b11e9d8a"
+            ]
+        ]
+    },
+    {
+        "id": "3265b0f4a64d557a",
+        "type": "debug",
+        "z": "5b855d571e5a6a3d",
+        "name": "status",
+        "active": false,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 950,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "459c81a66b3b97d5",
+        "type": "mqtt out",
+        "z": "5b855d571e5a6a3d",
+        "name": "",
+        "topic": "",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d6e84c20719de59b",
+        "x": 1210,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "0f8d6960b11e9d8a",
+        "type": "change",
+        "z": "5b855d571e5a6a3d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "IOT2050/em1/voltage/alarm",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 980,
+        "y": 280,
+        "wires": [
+            [
+                "459c81a66b3b97d5"
+            ]
+        ]
+    },
+    {
+        "id": "430afa77bcedce7c",
+        "type": "function",
+        "z": "5b855d571e5a6a3d",
+        "name": "get system-date seconds",
+        "func": "let now = new Date();\nmsg.payload = now.getSeconds();\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 40,
+        "wires": [
+            [
+                "c15f51f6d6d5ac85",
+                "55b81e22e7a05ed6"
+            ]
+        ]
+    },
+    {
+        "id": "9b9c49525e0bfd93",
+        "type": "inject",
+        "z": "5b855d571e5a6a3d",
+        "name": "1s cycle",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 40,
+        "wires": [
+            [
+                "430afa77bcedce7c"
+            ]
+        ]
+    },
+    {
+        "id": "c15f51f6d6d5ac85",
+        "type": "debug",
+        "z": "5b855d571e5a6a3d",
+        "name": "current second",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 620,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "55b81e22e7a05ed6",
+        "type": "function",
+        "z": "5b855d571e5a6a3d",
+        "name": "trigger every 1 min",
+        "func": "if (msg.payload === 0) {\n    return msg;\n} else {\n    return null;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 120,
+        "wires": [
+            [
+                "be8356f0fc024840"
+            ]
+        ]
+    },
+    {
+        "id": "750550a1522a2162",
+        "type": "debug",
+        "z": "5b855d571e5a6a3d",
+        "name": "current second",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 420,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "d6e84c20719de59b",
+        "type": "mqtt-broker",
+        "name": "UseCase",
+        "broker": "10.12.38.2",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]

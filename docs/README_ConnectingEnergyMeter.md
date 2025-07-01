@@ -1,15 +1,13 @@
 # **IOT2050 Setup & Connecting Energy Meter 1238**
 
-- [**IOT2050 Setup /& Connecting Energy Meter 1238**](#iot2050-setup--connecting-energy-meter-1238)
+- [**IOT2050 Setup \& Connecting Energy Meter 1238**](#iot2050-setup--connecting-energy-meter-1238)
   - [**Prepare the IOT2050**](#prepare-the-iot2050)
-  - [Setup a NTP server conncetion](#setup-a-ntp-server-conncetion)
   - [**Hardware Setup IOT2050SM - Energy Meter 1238**](#hardware-setup-iot2050sm---energy-meter-1238)
     - [**Hardware connection between IOT2050SM and Energy Meter**](#hardware-connection-between-iot2050sm-and-energy-meter)
     - [**Hardware structure of the Distribution Box**](#hardware-structure-of-the-distribution-box)
       - [**Structure**](#structure)
       - [**Safety-Relevant Details**](#safety-relevant-details)
   - [**EIO Config via IOT2050SM WebUI**](#eio-config-via-iot2050sm-webui)
-  - [**Node-Red Configuration**](#node-red-configuration)
 
 ## **Prepare the IOT2050**
 
@@ -17,8 +15,6 @@ Follow [SIMATIC_IOT2050_Setting_up.md](https://github.com/SIMATICmeetsLinux/IOT2
 
 - Installing the SD-Card Example Image (minimum Example Image V1.4 is required!) -> in this example V01.04.04 is used
 - First commissioning of the SIMATIC IOT2050: Remote access with Putty SSH Connection
-
-## Setup a NTP server conncetion
 
 ## **Hardware Setup IOT2050SM - Energy Meter 1238**
 
@@ -55,7 +51,7 @@ Please read the following points attentive:
 
 ## **EIO Config via IOT2050SM WebUI**
 
-On the Example Image V1.4 (used in this manual) an EIO-configuration-interface is already preinstalled and autostart is enabled. To access it, open a browser on your PC connected to the IOT2050 and open the URL `http://<IP of the IOT2050>:2050/`.
+On the Example Image V1.4 (used in this manual) an ``EIO-configuration-interface`` is already preinstalled and autostart is enabled. To access it, open a browser on your PC connected to the IOT2050 and open the URL `http://<IP of the IOT2050>:2050/`.
 
 ![Flow overview: Building Structure in OPC UA](graphics/2-2-access-eio-webui.png)
 
@@ -64,9 +60,9 @@ Configure the flow according to your needs. You can also use the example configu
 ![module configuration](graphics/2-module-configuration.png)
 ![module configuration](graphics/2-module-configuration-2.png)
 
-**Note:** The selcted *current transformer primary current* depends on the used curent transfomer. Int his case 3x ELEQ TQ30 60/1A current transformer.
+**Note:** The selcted ``current transformer primary current`` depends on the used curent transfomer. Int his case *3x ELEQ TQ30 60/1A current transformer*.
 
-The selected process data variant *EE@Industry measured data profile e3 (W# 16# E3)* provides the following performance data:
+The selected process data variant ``EE@Industry measured data profile e3 (W# 16# E3)`` provides the following performance data:
 
 ![EE@Industry measured data profile e3 (W# 16# E3)](graphics/2-4-measurement-data-profile.png)
 
@@ -86,10 +82,4 @@ The performance energy data will then be stored in *value_raw* in the directory 
 
 ![value-raw](graphics/2-value-raw.png)
 
-## **Node-Red Configuration**
-
-On the Example Image V1.4 (used in this manual) Node-Red is already preinstalled and autostart is enabled. To access it, open a browser on your PC connected to the IOT2050 and open the URL `http://<IP of the IOT2050>:1880/`.
-
-The following illustrations show the complete Node-RED flow needed to ...
-
-![overview-flow](graphics/2-overview-flow.png)
+YOu finished the configuration of the Energy Meter 1238. The next step is to adjust the [Node-Red Configuration](/docs/README_DataManagementNodeRed.md).
