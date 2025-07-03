@@ -1,19 +1,13 @@
 # **IOT2050SM-Energy-Data-Management**
 
 - [**IOT2050SM-Energy-Data-Management**](#iot2050sm-energy-data-management)
-  - [**Warning - Hazardous voltage**](#warning---hazardous-voltage)
   - [**Overview**](#overview)
     - [**Used Components**](#used-components)
     - [**Goal**](#goal)
+  - [**Warning - Hazardous voltage**](#warning---hazardous-voltage)
     - [**Installation and configuration**](#installation-and-configuration)
   - [Contribution and Contribution License Agreement](#contribution-and-contribution-license-agreement)
   - [**Licence and Legal Information**](#licence-and-legal-information)
-
-## **Warning - Hazardous voltage**
-
-Will cause death or serious injury! This application example requires working with 230V and may only be carried out by qualified personnel.
-
-![warning](docs/graphics/0-voltage-warning.png)
 
 ## **Overview**
 
@@ -47,6 +41,12 @@ After working through the following documents, you will know how to:
 - Present and further process the data in SCADA
 
 This documentaion will focus on the IOT2050SM part and will not give deeper insights into setting up the SCADA system.
+
+## **Warning - Hazardous voltage**
+
+Will cause death or serious injury! This application example requires working with 230V and may only be carried out by qualified personnel.
+
+![warning](docs/graphics/0-voltage-warning.png)
 
 ### **Installation and configuration**
 

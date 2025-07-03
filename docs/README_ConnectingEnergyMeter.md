@@ -26,7 +26,7 @@ The IOT2050SM needs to be connected to the SM 1238 Energy Meter using the connec
 
 ### **Hardware structure of the Distribution Box**
 
-![!!DANGER! Hazardous voltage. Will cause death or serious injury!! Turn off and lock out all power supplying this device before working on this device. Installation and maintenance work on this device may only be carried out by an authorized electrician. The exemplary structure is only for inspiration and may not be copied 1:1 without expert assessment.](graphics/0-0-voltage-warning.png)
+![warning](graphics/0-voltage-warning.png)
 
 ![distribution box](graphics/2-1-distributionbox.png)
 
@@ -82,4 +82,4 @@ The performance energy data will then be stored in *value_raw* in the directory 
 
 ![value-raw](graphics/2-value-raw.png)
 
-YOu finished the configuration of the Energy Meter 1238. The next step is to adjust the [Node-Red Configuration](/docs/README_DataManagementNodeRed.md).
+You finished the configuration of the Energy Meter 1238. The next step is to adjust the [Node-Red Configuration](/docs/README_DataManagementNodeRed.md).

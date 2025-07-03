@@ -168,3 +168,7 @@ return alarmMsg;
 ```
 
 The output will then be tagged with a varabel topic which is used to publish it to the SCADA-system. For example `IOT2050/em1/voltage/data`. The values will then be published via MQTT using the `mqtt`-node.
+
+The different `debug-nodes` will help diagnose the different values.
+
+In the next step we will show the necessary steps to [receive the incoming topics via mqtt in an existing SCADA-system](/docs/README_ScadaData.md).
