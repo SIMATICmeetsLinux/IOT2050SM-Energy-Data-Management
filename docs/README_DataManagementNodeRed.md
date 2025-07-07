@@ -121,24 +121,21 @@ let timestamp = flow.get("timestamp") || "no stored timestamp";
 if (typeof msg.payload === "number" && msg.topic !== "trigger") {
     buffer.push(msg.payload);
     context.set('buffer', buffer);
-    return null; // Noch nichts ausgeben
+    return null;
 }
 
 // Check after trigger
 if (msg.topic === "trigger" && buffer.length > 0) {
-    let min = Math.min(...buffer);
-    let max = Math.max(...buffer);
-    let avg = buffer.reduce((a, b) => a + b, 0) / buffer.length;
-    // Reset Buffer
-    context.set('buffer', []);
     // Forward data
     msg.payload = {
-        min: min,
-        max: max,
-        avg: avg,
+        min: Math.min(...buffer),
+        max: Math.max(...buffer),
+        avg: buffer.reduce((a, b) => a + b, 0) / buffer.length,
         count: buffer.length,
         timestamp: timestamp
     };
+    // Reset Buffer
+    context.set('buffer', []);
     return msg;
 }
 
