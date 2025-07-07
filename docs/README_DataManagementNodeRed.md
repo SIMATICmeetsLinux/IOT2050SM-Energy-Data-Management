@@ -81,7 +81,7 @@ Africa/Asmara
 
 ![node-red-part2](graphics/3-nodered-part2.png)
 
-The `read file node` is used to read the file `/eiofs/controller/slot1/value_raw` every 50ms and to transfer the content to a buffer-object-output. The following functions `voltage UL1-N`, `curent L1`, `curent L2`, `curent L3` and `total active energy L1L2L3 inflow` will then extract the relevant bytes and transform it into a Double-value. This is shown here as an example using `voltage UL1-N`:
+The `read file node` is used to read the file `/eiofs/controller/slot1/value_raw` every 50ms and to transfer the content to a buffer-object-output. The following functions `voltage UL1-N`, `current L1`, `current L2`, `current L3` and `total active energy L1L2L3 inflow` will then extract the relevant bytes and transform it into a Double-value. This is shown here as an example using `voltage UL1-N`:
 
 ```javascript
 let bytes = [msg.payload[58], msg.payload[59], msg.payload[60], msg.payload[61]];
@@ -109,7 +109,7 @@ As we can see in the process data profile overview in [EIO Config via IOT2050SM 
 
 ![node-red-part2](graphics/3-nodered-part2.png)
 
-This part of the flow stores the incoming data into a data-buffer `let buffer`. After getting the trigger-signal it sends an array with `min`, `max`, `avg` and `count` (for the example funtion of `volUL1-N`).
+This part of the flow stores the incoming data into a data-buffer `let buffer`. After getting the trigger-signal it sends an array with `min`, `max`, `avg`, `count` and `timestamp` (for the example funtion of `voltage UL1-N`).
 
 ```javascript
 // Get current buffer
