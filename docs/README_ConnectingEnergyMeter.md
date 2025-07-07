@@ -22,13 +22,13 @@ Follow [SIMATIC_IOT2050_Setting_up.md](https://github.com/SIMATICmeetsLinux/IOT2
 
 The IOT2050SM needs to be connected to the SM 1238 Energy Meter using the connection cable.
 
-![distribution box](graphics/2-1-connected-IOT2050SM.png)
+![distribution box](graphics/2-connected-IOT2050SM.png)
 
 ### **Hardware structure of the Distribution Box**
 
 ![warning](graphics/0-voltage-warning.png)
 
-![distribution box](graphics/2-1-distributionbox.png)
+![distribution box](graphics/2-distributionbox.png)
 
 Please read the following points attentive:
 
@@ -51,9 +51,9 @@ Please read the following points attentive:
 
 ## **EIO Config via IOT2050SM WebUI**
 
-On the Example Image V1.4 (used in this manual) an ``EIO-configuration-interface`` is already preinstalled and autostart is enabled. To access it, open a browser on your PC connected to the IOT2050 and open the URL `http://<IP of the IOT2050>:2050/`.
+On the Example Image V1.4 (used in this manual) an `EIO-configuration-interface` is already preinstalled and autostart is enabled. To access it, open a browser on your PC connected to the IOT2050 and open the URL `http://<IP of the IOT2050>:2050/`.
 
-![Flow overview: Building Structure in OPC UA](graphics/2-2-access-eio-webui.png)
+![Flow overview: Building Structure in OPC UA](graphics/2-access-eio-webui.png)
 
 Configure the flow according to your needs. You can also use the example configuration of this application example: [config.yaml](../src/config.yaml) -> Click "Import Configuration" and select the example configuration.
 
@@ -64,7 +64,7 @@ Configure the flow according to your needs. You can also use the example configu
 
 The selected process data variant ``EE@Industry measured data profile e3 (W# 16# E3)`` provides the following performance data:
 
-![EE@Industry measured data profile e3 (W# 16# E3)](graphics/2-4-measurement-data-profile.png)
+![EE@Industry measured data profile e3 (W# 16# E3)](graphics/2-measurement-data-profile.png)
 
 The following allocations are relevant for this example:
 
@@ -76,7 +76,7 @@ For more detailed information have a look into the SM 1238 Energy Meter 480VAC M
 
 If all settings have been made correctly, click on **Deploy** to apply the configuration to the IOT2050SM.
 
-![Deploy Configuration to IOT2050SM](graphics/2-5-deploy-config.png)
+![Deploy Configuration to IOT2050SM](graphics/2-deploy-config.png)
 
 The performance energy data will then be stored in *value_raw* in the directory */eiofs/controller/slot1/*.
 

@@ -1,7 +1,7 @@
 # **Node-Red Configuration**
 
 - [**Node-Red Configuration**](#node-red-configuration)
-  - [**Conection to system-time and time-based trigger for data pocessing**](#conection-to-system-time-and-time-based-trigger-for-data-pocessing)
+  - [**Connection to system-time and time-based trigger for data processing**](#connection-to-system-time-and-time-based-trigger-for-data-processing)
   - [**Synchronized system-time to NTP**](#synchronized-system-time-to-ntp)
   - [**Read out Energy Meter 1238 energy performance data using Node-Red**](#read-out-energy-meter-1238-energy-performance-data-using-node-red)
   - [**Data Buffer and Forwarding via MQTT**](#data-buffer-and-forwarding-via-mqtt)
@@ -12,7 +12,7 @@ The following illustrations show the complete Node-RED flow needed to read, stor
 
 ![overview-flow](graphics/3-overview-flow.png)
 
-## **Conection to system-time and time-based trigger for data pocessing**
+## **Connection to system-time and time-based trigger for data processing**
 
 ![node-red-part1](graphics/3-nodered-part1.png)
 
@@ -47,7 +47,9 @@ ConnectionRetrySec=30
 SaveIntervalSec=60
 ```
 
-Save the file and open a terminal. It's also necessary to adjust your timezone correctly. In our case with `set-timezone Europe/Berlin` Now you can restart the timesync-service and check if it is correctly synchronized:
+You can also copy and save our example `timesyncd.conf` to your system into `/etc/systemd/`: [timesyncd.conf](/src/timesynced.conf)
+
+Save the file and open a terminal. It's also necessary to adjust your timezone correctly. In our case with `set-timezone Europe/Berlin`. Now you can restart the timesync-service wit `sudo systemctl restart systemd-timesyncd` and check if it is correctly synchronized with `timedatectl status`:
 
 ```bash
 root@iot2050-debian:~# timedatectl set-timezone Europe/Berlin
