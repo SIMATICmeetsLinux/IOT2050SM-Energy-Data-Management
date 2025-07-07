@@ -16,7 +16,7 @@ The following illustrations show the complete Node-RED flow needed to read, stor
 
 ![node-red-part1](graphics/3-nodered-part1.png)
 
-The first part of our flow will synchronize the flow with the system time of the IOT2050. For this purpose the seconds of the system time will read out by the function `get system-date seconds`. It will also store the current UTC-timestamp to the buffer. This timestamp will later be added to the `mqtt-topics`:
+The first part of our flow will synchronize the flow with the system time of the IOT2050. For this purpose the seconds of the system time will be read out by the function `getSeconds()`. It will also store the current UTC-timestamp to the buffer. This timestamp will later be added to the `mqtt-topics`:
 
 ```javascript
 let timestamp = Date.now();
@@ -52,9 +52,9 @@ ConnectionRetrySec=30
 SaveIntervalSec=60
 ```
 
-You can also copy and save our example `timesyncd.conf` to your system into `/etc/systemd/`: [timesyncd.conf](/src/timesynced.conf)
+You can also copy and save our example `timesyncd.conf` to your system into `/etc/systemd/`: [timesyncd.conf](/src/timesyncd.conf)
 
-Save the file and open a terminal. Additionally you can adjust your timezone. In our case with `set-timezone Europe/Berlin`. For the `flow-timestamp` we are using Universal Time Coordinated (UTC). Now you can restart the timesync-service wit `sudo systemctl restart systemd-timesyncd` and check if it is correctly synchronized with `timedatectl status`:
+Save the file and open a terminal. Additionally you can adjust your timezone. In our case with `set-timezone Europe/Berlin`. For the `flow-timestamp` we are using Universal Time Coordinated (UTC). Now you can restart the `timesyncd-service` with `sudo systemctl restart systemd-timesyncd` and check if it is correctly synchronized with `timedatectl status`:
 
 ```bash
 root@iot2050-debian:~# timedatectl set-timezone Europe/Berlin
@@ -70,7 +70,7 @@ System clock synchronized: yes
 
 ```
 
-YOu can use `timedatectl list-timezones` to see all available timezones for the `timedatectl-service`:
+You can use `timedatectl list-timezones` to see all available timezones for the `timedatectl-service`:
 
 ```bash
 root@iot2050-debian:~# timedatectl list-timezones
@@ -104,15 +104,15 @@ As we can see in the process data profile overview in [EIO Config via IOT2050SM 
 
 |Byte|Allocation|
 |---|---|
-|26..33|Total active energy L1L2L3 inflow|
-|58..61|Voltage UL1-N|
-|82..85|Current L1|
-|86..89|Current L2|
-|90..93|Current L3|
+|[26]..[33]|Total active energy L1L2L3 inflow|
+|[58]..[61]|Voltage UL1-N|
+|[82]..[85]|Current L1|
+|[86]..[89]|Current L2|
+|[90]..[93]|Current L3|
 
 ## **Data Buffer and Forwarding via MQTT**
 
-![node-red-part2](graphics/3-nodered-part2.png)
+![node-red-part3](graphics/3-nodered-part3.png)
 
 This part of the flow stores the incoming data into a data-buffer `let buffer`. After getting the trigger-signal it sends an array with `min`, `max`, `avg`, `count` and `timestamp` (for the example funtion of `voltage UL1-N`).
 
@@ -188,8 +188,12 @@ flow.set('alarmState', newState);
 return alarmMsg;
 ```
 
-The output will then be tagged with a variabel topic which is used to publish it to the SCADA-system. For example `IOT2050/em1/voltage/data`. The values will then be published via MQTT using the `mqtt`-node.
+The output will then be tagged with a variabel topic which is used to publish it to the SCADA-system. For example `IOT2050/em1/voltage/data`. The values will then be published via MQTT using the `mqtt`-node. The `mqtt-node` must be adapted to your needs.
+
+![node-red-part4](graphics/3-nodered-part4.png)
 
 The different `debug-nodes` will help diagnose the different values.
+
+![node-red-part5](graphics/3-nodered-part5.png)
 
 In the next step we will show the necessary steps to [receive the incoming topics via mqtt in an existing SCADA-system](/docs/README_ScadaData.md).
