@@ -49,7 +49,7 @@ SaveIntervalSec=60
 
 You can also copy and save our example `timesyncd.conf` to your system into `/etc/systemd/`: [timesyncd.conf](/src/timesynced.conf)
 
-Save the file and open a terminal. It's also necessary to adjust your timezone correctly. In our case with `set-timezone Europe/Berlin`. Now you can restart the timesync-service wit `sudo systemctl restart systemd-timesyncd` and check if it is correctly synchronized with `timedatectl status`:
+Save the file and open a terminal. Additionally you can adjust your timezone. In our case with `set-timezone Europe/Berlin`. For the `flow-timestamp` we are using Universal Time Coordinated (UTC). Now you can restart the timesync-service wit `sudo systemctl restart systemd-timesyncd` and check if it is correctly synchronized with `timedatectl status`:
 
 ```bash
 root@iot2050-debian:~# timedatectl set-timezone Europe/Berlin
@@ -114,6 +114,8 @@ This part of the flow stores the incoming data into a data-buffer `let buffer`. 
 ```javascript
 // Get current buffer
 let buffer = context.get('buffer') || [];
+let timestamp = flow.get("timestamp") || "no stored timestamp";
+
 
 // Check if new content or trigger
 if (typeof msg.payload === "number" && msg.topic !== "trigger") {
@@ -134,13 +136,16 @@ if (msg.topic === "trigger" && buffer.length > 0) {
         min: min,
         max: max,
         avg: avg,
-        count: buffer.length
+        count: buffer.length,
+        timestamp: timestamp
     };
     return msg;
 }
 
 return null;
 ```
+
+All `buffer-topics` contain a UTC-timestamp (depending on the pre-configured ntp-server / system-time).
 
 The `voltage alarm` additionally examines the incoming value for predefined upper and lower threshold values:
 
@@ -181,7 +186,7 @@ flow.set('alarmState', newState);
 return alarmMsg;
 ```
 
-The output will then be tagged with a varabel topic which is used to publish it to the SCADA-system. For example `IOT2050/em1/voltage/data`. The values will then be published via MQTT using the `mqtt`-node.
+The output will then be tagged with a variabel topic which is used to publish it to the SCADA-system. For example `IOT2050/em1/voltage/data`. The values will then be published via MQTT using the `mqtt`-node.
 
 The different `debug-nodes` will help diagnose the different values.
 
