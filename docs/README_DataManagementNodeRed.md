@@ -16,11 +16,16 @@ The following illustrations show the complete Node-RED flow needed to read, stor
 
 ![node-red-part1](graphics/3-nodered-part1.png)
 
-The first part of our flow will synchronize the flow with the system time of the IOT2050. For this purpose the seconds of the system time will read out by the function `get system-date seconds`:
+The first part of our flow will synchronize the flow with the system time of the IOT2050. For this purpose the seconds of the system time will read out by the function `get system-date seconds`. It will also store the current UTC-timestamp to the buffer. This timestamp will later be added to the `mqtt-topics`:
 
 ```javascript
-let now = new Date();
+let timestamp = Date.now();
+let now = new Date(timestamp);
+
+flow.set("timestamp", timestamp);
+
 msg.payload = now.getSeconds();
+return msg;
 ```
 
 The function `trigger every 1 min` will then wait until a full minute has elapsed:
@@ -65,7 +70,7 @@ System clock synchronized: yes
 
 ```
 
-YOu can use `timedatectl list-timezones` to see all available timezones fpr the `timedatectl-service`:
+YOu can use `timedatectl list-timezones` to see all available timezones for the `timedatectl-service`:
 
 ```bash
 root@iot2050-debian:~# timedatectl list-timezones
@@ -144,7 +149,7 @@ return null;
 
 All `buffer-topics` contain a UTC-timestamp (depending on the pre-configured ntp-server / system-time).
 
-The `voltage alarm` additionally examines the incoming value for predefined upper and lower threshold values:
+The `voltage alarm` additionally examines the incoming value for predefined upper and lower threshold values (continuously):
 
 ```javascript
 // limits
