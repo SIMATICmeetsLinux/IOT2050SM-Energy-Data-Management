@@ -65,6 +65,18 @@ System clock synchronized: yes
 
 ```
 
+YOu can use `timedatectl list-timezones` to see all available timezones fpr the `timedatectl-service`:
+
+```bash
+root@iot2050-debian:~# timedatectl list-timezones
+Africa/Abidjan
+Africa/Accra
+Africa/Addis_Ababa
+Africa/Algiers
+Africa/Asmara
+[...]
+```
+
 ## **Read out Energy Meter 1238 energy performance data using Node-Red**
 
 ![node-red-part2](graphics/3-nodered-part2.png)
