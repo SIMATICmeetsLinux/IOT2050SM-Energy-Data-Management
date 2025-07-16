@@ -10,7 +10,7 @@
 
 ## **Overview & Used Components**
 
-This document describes the installation and operation of an example project for recording energy data stored by a Node Red application on an IOT 2050 SM in any MQTT broker in the structure defined in the associated application example.
+This document describes the installation and operation of an example WinCC OA project for recording energy data sent by a Node-Red application on an IOT2050SM via MQTT.
 
 This part has been created with the following software components:
 
@@ -22,17 +22,17 @@ This part has been created with the following software components:
 |WinCC OA - Para Standard|6AV6355-1AA50-0CH0|
 |WinCC OA - Std. Protocol (Connectivity)|6AV6355-1AA50-0DN0|
 
-This example will not describe all steps that are neccessary to install Winn CC OA and to create the project. **It is only intended to show by way of example how to proceed further with the data obtained and processed**.
+This example will not describe all steps that are neccessary to install WinCC OA and to create the project. **It is only intended to show by way of example how to proceed further with the data obtained and processed**.
 
 **The used project is stored here: [UCC_PT_EnergyData.zip](../src/UCC_PT_EnergyData.zip).**
 
-> To carry out the installation of WinCC OA, please follow the steps in the WinCC OA documentation. You can find the [documentation here](https://www.winccoa.com/documentation/WinCCOA/latest/en_US/Installation/INSTPVSS.html). The **Runtime Server installation option is sufficient** for this application
+> To carry out the installation of WinCC OA, please follow the steps in the WinCC OA documentation. You can find the [documentation here](https://www.winccoa.com/documentation/WinCCOA/latest/en_US/Installation/INSTPVSS.html). The **Runtime Server installation option is sufficient** for this application.
 
 ## **Eclipse Mosquitto MQTT Broker**
 
 In this application example we use an Eclipse Mosquitto MQTT Broker. Eclipse Mosquitto is an open-source message broker (licensed under EPL/EDL) that supports MQTT protocol versions 5.0, 3.1.1, and 3.1. More information and a way to download the software can be found here: [https://mosquitto.org/download/](https://mosquitto.org/download/)
 
-After installing the software package, the configuration file C:\Program Files\mosquitto.conf must be adapted. For simple communication without certificates and passwords in the network, add the following lines at the end of the file:
+After installing the software package, the configuration file ``mosquitto.conf`` must be adapted. For simple communication without certificates and passwords in the network, add the following lines at the end of the file:
 
 ```bash
 require_certificate false
@@ -40,14 +40,14 @@ allow_anonymous true
 listener 1883 <your ip address>
 ```
 
-The Eclipse Mosquitto MQTT Broker does not have its own interface. The data in the broker can be visualized with MQTT clients such as the MQTT Explorer. You can find more information about the MQTT Explorer here: [https://mqtt-explorer.com/](https://mqtt-explorer.com/)
+The Eclipse Mosquitto MQTT Broker does not have its own interface. The data in the broker can be visualized with MQTT clients such as the MQTT Explorer. You can find [more information about the MQTT Explorer here](https://mqtt-explorer.com/).
 
 ## **Preparation and Configuration of the WinCC OA project**
 
 |No.|Action|
 |-|-|
 |1.|Unpack the supplied `ZIP-File UCC_PT_EnergyData.zip` into a folder.|
-|2.|Start the ``WinCC OA Project Administrator`` and click on “Register project” Icon|
+|2.|Start the ``WinCC OA Project Administrator`` and click on ``Register project`` Icon|
 ||![register-project](graphics/4-register-project.png)|
 |3.|Select the unzipped folder ``UCC_PT_EnergyData`` and press ``OK``|
 ||![select-project](graphics/4-select-project.png)|
@@ -74,7 +74,7 @@ In the table ``Topic Settings for new devices``, the MQTT items of the individua
 |No.|Action|
 |-|-|
 |1.|To create a new device in WinCC OA, enter any device name. The source topic is pre-assigned with ``IOT2050/`` according to the definition in this example. The device item for this example is per definition ``em1``.|
-|2.|This configuration means that WinCC OA subscribes to the topic ``IOT250/em1/voltage/data`` for the ``voltage topic`` and stores the information it contains for the avergage, minimum and maximum on different tags. The timestamp is also taken from the payload of the topic.|
+|2.|This configuration means that WinCC OA subscribes to the topic ``IOT2050/em1/voltage/data`` for the ``voltage topic`` and stores the information it contains for the avergage, minimum and maximum on different tags. The timestamp is also taken from the payload of the topic.|
 ||![topic-settings](graphics/4-topic-settings.png)|
 |3.|After clicking on ``Create or update Device``, the device is created as a data point in WinCC OA and appears in the table. If the current tag data is older than one minute, the timestamp is displayed in red. New data arrives at the full minute and the time stamp is displayed in green.|
 ||![create-or-update-device](graphics/4-create-or-update-device.png)|

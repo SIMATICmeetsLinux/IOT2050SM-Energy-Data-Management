@@ -12,6 +12,8 @@ The following illustrations show the complete Node-RED flow needed to read, stor
 
 ![overview-flow](graphics/3-overview-flow.png)
 
+**Click on the menu icon and import the pre-made flow: [flow.json](../src/flow.json).** -> The flow will open in a new tab of node-red.
+
 ## **Connection to system-time and time-based trigger for data processing**
 
 ![node-red-part1](graphics/3-nodered-part1.png)
