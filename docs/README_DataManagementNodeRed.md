@@ -35,7 +35,7 @@ if (msg.payload === 0) {
     return msg;
 ```
 
-In the area of energy management it is crucial to use a dedicated trigger. To archive this you should synchronize your application to an ntp-server (internet connection required). We recommend the following method:
+In the area of energy management it is crucial to use a dedicated trigger. To archive this you should synchronize your application to an ``ntp-server`` - *internet connection required*. We recommend the following method:
 
 ## **Synchronized system-time to NTP**
 
@@ -51,6 +51,8 @@ PollIntervalMaxSec=2048
 ConnectionRetrySec=30
 SaveIntervalSec=60
 ```
+
+We use the **[NTP Pool Project](https://www.ntppool.org/en/)** for this purpose. The ``pool.ntp.org project`` is a big virtual cluster of timeservers providing reliable, easy to use NTP service for millions of clients.
 
 You can also copy and save our example `timesyncd.conf` to your system into `/etc/systemd/`: [timesyncd.conf](/src/timesyncd.conf)
 
@@ -86,7 +88,7 @@ Africa/Asmara
 
 ![node-red-part2](graphics/3-nodered-part2.png)
 
-The `read file node` is used to read the file `/eiofs/controller/slot1/value_raw` every 50ms and to transfer the content to a buffer-object-output. The following functions `voltage UL1-N`, `current L1`, `current L2`, `current L3` and `total active energy L1L2L3 inflow` will then extract the relevant bytes and transform it into a Double-value. This is shown here as an example using `voltage UL1-N`:
+The `read file node` is used to read the file `/eiofs/controller/slot1/value_raw` every 50ms and to transfer the content to a ``buffer-object-output``. The following functions `voltage UL1-N`, `current L1`, `current L2`, `current L3` and `total active energy L1L2L3 inflow` will then extract the relevant bytes and transform it into a double-value. This is shown here as an example using `voltage UL1-N`:
 
 ```javascript
 let bytes = [msg.payload[58], msg.payload[59], msg.payload[60], msg.payload[61]];
@@ -188,7 +190,7 @@ flow.set('alarmState', newState);
 return alarmMsg;
 ```
 
-The output will then be tagged with a variabel topic which is used to publish it to the SCADA-system. For example `IOT2050/em1/voltage/data`. The values will then be published via MQTT using the `mqtt`-node. The `mqtt-node` must be adapted to your needs.
+The output will then be tagged with a variabel topic which is used to publish it to the SCADA-system. For example `IOT2050/em1/voltage/data`. The values will then be published via MQTT using the `mqtt-node`. The `mqtt-node` must be adapted to your needs.
 
 ![node-red-part4](graphics/3-nodered-part4.png)
 

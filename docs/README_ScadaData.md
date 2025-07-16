@@ -2,6 +2,7 @@
 
 - [**Data Management with WinCC OA**](#data-management-with-wincc-oa)
   - [**Overview \& Used Components**](#overview--used-components)
+  - [**Eclipse Mosquitto MQTT Broker**](#eclipse-mosquitto-mqtt-broker)
   - [**Preparation and Configuration of the WinCC OA project**](#preparation-and-configuration-of-the-wincc-oa-project)
   - [**MQTT connection**](#mqtt-connection)
   - [**Create Energy Meter device in SCADA**](#create-energy-meter-device-in-scada)
@@ -26,6 +27,20 @@ This example will not describe all steps that are neccessary to install Winn CC 
 **The used project is stored here: [UCC_PT_EnergyData.zip](../src/UCC_PT_EnergyData.zip).**
 
 > To carry out the installation of WinCC OA, please follow the steps in the WinCC OA documentation. You can find the [documentation here](https://www.winccoa.com/documentation/WinCCOA/latest/en_US/Installation/INSTPVSS.html). The **Runtime Server installation option is sufficient** for this application
+
+## **Eclipse Mosquitto MQTT Broker**
+
+In this application example we use an Eclipse Mosquitto MQTT Broker. Eclipse Mosquitto is an open-source message broker (licensed under EPL/EDL) that supports MQTT protocol versions 5.0, 3.1.1, and 3.1. More information and a way to download the software can be found here: [https://mosquitto.org/download/](https://mosquitto.org/download/)
+
+After installing the software package, the configuration file C:\Program Files\mosquitto.conf must be adapted. For simple communication without certificates and passwords in the network, add the following lines at the end of the file:
+
+```bash
+require_certificate false
+allow_anonymous true
+listener 1883 <your ip address>
+```
+
+The Eclipse Mosquitto MQTT Broker does not have its own interface. The data in the broker can be visualized with MQTT clients such as the MQTT Explorer. You can find more information about the MQTT Explorer here: [https://mqtt-explorer.com/](https://mqtt-explorer.com/)
 
 ## **Preparation and Configuration of the WinCC OA project**
 

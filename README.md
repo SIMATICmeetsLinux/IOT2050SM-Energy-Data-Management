@@ -6,30 +6,31 @@
     - [**Goal**](#goal)
     - [**Warning - Hazardous voltage**](#warning---hazardous-voltage)
     - [**Installation and configuration**](#installation-and-configuration)
+  - [**Related Links**](#related-links)
   - [Contribution and Contribution License Agreement](#contribution-and-contribution-license-agreement)
   - [**Licence and Legal Information**](#licence-and-legal-information)
 
 ## **Overview**
 
-This application describes how collect and manage energy data on an IOT2050SM using a compatible Energy Meter 1238. The performance data will be collected, pre-processed and forwarded to a SCADA system using MQTT.
+This application describes how to collect and manage energy data on an IOT2050SM using a compatible Energy Meter 1238. The performance data will be collected, pre-processed and forwarded to a SCADA system using MQTT.
 
 ![Overview](docs/graphics/1-overview.png)
 
 ### **Used Components**
 
-This Example was created using the following Software:
+This Example was created using the following **Software**:
 
 - **On Debian (IOT2050):**
   - Node-Red
   - IOT2050SM WebUI
 
-TBD MARCO SOFTWARE
-
-The Tests were executed on the following Hardware:
+This Example was created using the following **Hardware**:
 
 - SIMATIC IOT2050SM (6ES7647-0CA00-1AA2)
 - SIMATIC SM 1238 Energy Meter 480VAC (6ES7238-5XA32-0XB0)
 - 3x ELEQ TQ30 60/1A current transformer
+
+The SCADA part is considered externally in this application example. The necessary hardware and software for this specific example are therefore only listed in part [Data processing in SCADA](docs/README_ScadaData.md). **The primary focus is on data collection, processing and forwarding using the EnergyMeter and IOT2050SM**.
 
 ### **Goal**
 
@@ -40,7 +41,7 @@ After working through the following documents, you will know how to:
 - Forward the data to a superior SCADA system using MQTT
 - Present and further process the data in SCADA
 
-This documentaion will focus on the IOT2050SM part and will not give deeper insights into setting up the SCADA system.
+This documentation will focus on the IOT2050SM part and will only give superficial information about setting up the SCADA system.
 
 ### **Warning - Hazardous voltage**
 
@@ -50,19 +51,20 @@ Will cause death or serious injury! This application example requires working wi
 
 ### **Installation and configuration**
 
-Use the following documents for the configuration of the IOT2050 and S7-1500:
+Use the following documents for the configuration of the IOT2050SM:
 
 - [Connection and Configuring Energy Meter 1238](docs/README_ConnectingEnergyMeter.md)
 - [Data management in NodeRed](docs/README_DataManagementNodeRed.md)
 - [Data processing in SCADA](docs/README_ScadaData.md)
 
-TBD ## **Related Links**
+## **Related Links**
 
 ||Topic|
 |-|-|
-|1|SIMATIC IOT2050 forum: [https://support.industry.siemens.com/tf/ww/en/threads/309](https://support.industry.siemens.com/tf/ww/en/threads/309)|
-|2|SIMATIC IOT2050 Getting Started: [https://support.industry.siemens.com/tf/ww/en/posts/238945/](https://support.industry.siemens.com/tf/ww/en/posts/238945/)|
-|3|Operating Instructions: [https://support.industry.siemens.com/cs/ww/en/view/109779016](https://support.industry.siemens.com/cs/ww/en/view/109779016)|
+|1|SIMATIC IOT2050 Forum: [https://sieportal.siemens.com/en-WW/support/forum/topics/309](https://sieportal.siemens.com/en-WW/support/forum/topics/309)|
+|2|SIMATIC IOT2050 Download Page: [https://support.industry.siemens.com/cs/document/109741799/downloads-for-simatic-iot20x0](https://support.industry.siemens.com/cs/document/109741799/downloads-for-simatic-iot20x0)|
+|3|SIMATIC IOT2050 Guide: [https://sieportal.siemens.com/en-ww/support/forum/posts/IOT2050-Forum-Topics-Overview/332396](https://sieportal.siemens.com/en-ww/support/forum/posts/IOT2050-Forum-Topics-Overview/332396)|
+|4|Operating Instructions: [https://support.industry.siemens.com/cs/ww/en/view/109779016](https://support.industry.siemens.com/cs/ww/en/view/109779016)|
 
 ## Contribution and Contribution License Agreement
 
