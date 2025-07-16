@@ -7,7 +7,7 @@
     - [**Warning - Hazardous voltage**](#warning---hazardous-voltage)
     - [**Installation and configuration**](#installation-and-configuration)
   - [**Related Links**](#related-links)
-  - [Contribution and Contribution License Agreement](#contribution-and-contribution-license-agreement)
+  - [**Contribution and Contribution License Agreement**](#contribution-and-contribution-license-agreement)
   - [**Licence and Legal Information**](#licence-and-legal-information)
 
 ## **Overview**
@@ -66,7 +66,7 @@ Use the following documents for the configuration of the IOT2050SM:
 |3|SIMATIC IOT2050 Guide: [https://sieportal.siemens.com/en-ww/support/forum/posts/IOT2050-Forum-Topics-Overview/332396](https://sieportal.siemens.com/en-ww/support/forum/posts/IOT2050-Forum-Topics-Overview/332396)|
 |4|Operating Instructions: [https://support.industry.siemens.com/cs/ww/en/view/109779016](https://support.industry.siemens.com/cs/ww/en/view/109779016)|
 
-## Contribution and Contribution License Agreement
+## **Contribution and Contribution License Agreement**
 
 Thank you for your interest in contributing. Anybody is free to report bugs, unclear documentation, and other problems regarding this repository in the Issues section.
 Additionally everybody is free to propose any changes to this repository using Pull Requests.
