@@ -23,8 +23,6 @@ The shown Application Example is part of the **UCC Production Transparency Campa
 
 <video src="docs\videos\iot2050sm-energy-data-management-demo.mp4" controls></video>
 
-For more information about the UCC Production Transparency Campaign you can click here.
-
 ### **Used Components**
 
 This Example was created using the following **Software**:
