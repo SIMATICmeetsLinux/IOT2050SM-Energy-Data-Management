@@ -2,6 +2,7 @@
 
 - [**IOT2050SM-Energy-Data-Management**](#iot2050sm-energy-data-management)
   - [**Overview**](#overview)
+  - [**UCC Production Transparency Campaign**](#ucc-production-transparency-campaign)
     - [**Used Components**](#used-components)
     - [**Goal**](#goal)
     - [**Warning - Hazardous voltage**](#warning---hazardous-voltage)
@@ -15,6 +16,14 @@
 This application describes how to collect and manage energy data on an IOT2050SM using a compatible Energy Meter 1238. The performance data will be collected, pre-processed and forwarded to a SCADA system using MQTT.
 
 ![Overview](docs/graphics/1-overview.png)
+
+## **UCC Production Transparency Campaign**
+
+The shown Application Example is part of the **UCC Production Transparency Campaign**. The following two-minute video shows the necessary steps as an example.
+
+<video src="docs\videos\iot2050sm-energy-data-management-demo.mp4" controls></video>
+
+For more information about the UCC Production Transparency Campaign you can click here.
 
 ### **Used Components**
 
