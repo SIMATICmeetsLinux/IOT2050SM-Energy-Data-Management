@@ -69,7 +69,7 @@ The selected process data variant ``EE@Industry measured data profile E3 (W# 16#
 The **following allocations** are relevant for this application example:
 
 - ``total active energy L1L2L3 inflow`` [*x1Wh*]: energy consumption counter for L1, L2 and L3.
-- ``voltage UL1-N`` [*x1V*]: As L1, L2 and L3 are split from only one phase in this example this parameter is representive for volatge UL2-N and UL3-N too.
+- ``voltage UL1-N`` [*x1V*]: As L1, L2 and L3 are split from only one phase in this example this parameter is representive for voltage UL2-N and UL3-N too.
 - ``current L1-L2`` [*x1A*]: current / electric flow of the different lines.
 
 For more detailed information have a look into the **[SM 1238 Energy Meter 480VAC Manual](https://cache.industry.siemens.com/dl/files/435/109483435/att_886111/v1/sm1238_energy_meter_480vac_manual_en-US_en-US.pdf)**.

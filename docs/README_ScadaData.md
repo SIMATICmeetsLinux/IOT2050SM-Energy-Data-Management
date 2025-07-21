@@ -22,7 +22,7 @@ This part has been created with the following software components:
 |WinCC OA - Para Standard|6AV6355-1AA50-0CH0|
 |WinCC OA - Std. Protocol (Connectivity)|6AV6355-1AA50-0DN0|
 
-This example will not describe all steps that are neccessary to install WinCC OA and to create the project. **It is only intended to show by way of example how to proceed further with the data obtained and processed**.
+**This example is not intended to cover all steps required for installing WinCC OA and creating a project, but rather to illustrate how to proceed with the acquired and processed data.**
 
 **The used project is stored here: [UCC_PT_EnergyData.zip](../src/UCC_PT_EnergyData.zip).**
 
