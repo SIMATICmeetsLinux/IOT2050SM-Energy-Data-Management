@@ -34,20 +34,18 @@ The IOT2050SM needs to be connected to the SM 1238 Energy Meter using the connec
 
 #### **Structure**
 
-- **Incoming Power**: Only one phase (230V AC) and neutral enter the distribution box.
-- **Main Switch**: A 2-pole main switch disconnects both the phase and neutral for safety.
-- **Energy Meter**: Measures energy performance data consumption for the electricity consumer.
-- **Distribution**: The single phase is internally split and labeled as L1, L2, and L3, each with its own outlet and neutral connection.
-- **Current Transformers**: Each "L" line (L1, L2, L3) can be monitored separately, mainly for load measurement, not for phase difference.
-- **Outlets**: All outlets (L1, L2, L3) provide the same 230V AC relative to neutral, as they all originate from the same phase.
+- **Input power**: The box is supplied with one phase (L) (230V AC), neutral conductor (N), and the protective earth conductor (PE).
+- **Main Switch**: The main switch safely disconnects the phase and neutral conductor from the device.
+- **Energy Meter**: Measures the energy consumption data of the electricity device.
+- **Distribution**: The phase (L) is split internally between the terminals marked UL1, UL2, and UL3.
+- **Power Sockets**: All power socket (L1; L2; L3) are supplied by the same phase (230V AC).
+- **Current Transformers**: Each phase “L” (IL1:N / IL2:N / IL3:N) can be monitored separately for load measurement. **Not for phase difference measurement.**
 
 #### **Safety-Relevant Details**
 
-- **No Phase Shift**: Since all outputs are from the same phase, there is no 120° phase shift as in a real three-phase system. Connecting equipment that expects true three-phase power could lead to malfunction or damage.
-- **Overload Protection**: Each "L" line can be monitored for current, allowing overload detection and protection for each outlet.
-- **Clear Labeling**: Even though labeled L1, L2, L3, all are from the same phase. This must be clearly indicated to prevent confusion and unsafe connections, especially for users expecting three-phase power.
-- **Isolation**: The 2-pole main switch ensures safe disconnection of both phase and neutral during maintenance.
-- **Neutral Bonding**: Proper connection and grounding of the neutral conductor are essential for safety, as all outlets share the same neutral.
+- **No Phase Shift**: A three-phase connection (400V) is NOT possible in this setup. Connecting three-phase devices may result in malfunction or damage.
+- **Overload Protection**: Each phase “L” can be monitored for current, allowing overloads to be detected.
+- Work on the device must only be carried out by a **qualified electrician!**
 
 ## **EIO Config via IOT2050SM WebUI**
 
